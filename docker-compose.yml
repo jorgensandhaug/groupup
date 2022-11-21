@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  backend:
+    build: backend/.
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    links:
+      - frontend
+  frontend:
+    environment:
+      - REACT_APP_URL=http://localhost:8000
+    build: frontend/.
+    volumes:
+      - './frontend:app/'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - '3000:3000'
